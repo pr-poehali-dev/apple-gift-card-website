@@ -1,9 +1,13 @@
+
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <header className="bg-[#141414]/90 backdrop-blur-md text-white sticky top-0 z-50">
@@ -18,12 +22,11 @@ const Header = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex space-x-8 text-sm">
-            <Link to="/" className="opacity-80 hover:opacity-100">Магазин</Link>
-            <Link to="/" className="opacity-80 hover:opacity-100">Mac</Link>
-            <Link to="/" className="opacity-80 hover:opacity-100">iPad</Link>
-            <Link to="/" className="opacity-80 hover:opacity-100">iPhone</Link>
-            <Link to="/" className="opacity-80 hover:opacity-100">Watch</Link>
-            <Link to="/" className="font-medium">Gift Cards</Link>
+            <Link to="/" className={`${isActive('/') ? 'font-medium' : 'opacity-80 hover:opacity-100'}`}>Главная</Link>
+            <Link to="/catalog" className={`${isActive('/catalog') ? 'font-medium' : 'opacity-80 hover:opacity-100'}`}>Каталог</Link>
+            <Link to="/how-to-use" className={`${isActive('/how-to-use') ? 'font-medium' : 'opacity-80 hover:opacity-100'}`}>Как использовать</Link>
+            <Link to="/faq" className={`${isActive('/faq') ? 'font-medium' : 'opacity-80 hover:opacity-100'}`}>FAQ</Link>
+            <Link to="/contact" className={`${isActive('/contact') ? 'font-medium' : 'opacity-80 hover:opacity-100'}`}>Контакты</Link>
           </nav>
 
           {/* Mobile menu toggle */}
@@ -45,12 +48,11 @@ const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-[#141414] absolute w-full">
           <nav className="flex flex-col apple-container py-4 space-y-4 text-lg">
-            <Link to="/" className="py-2">Магазин</Link>
-            <Link to="/" className="py-2">Mac</Link>
-            <Link to="/" className="py-2">iPad</Link>
-            <Link to="/" className="py-2">iPhone</Link>
-            <Link to="/" className="py-2">Watch</Link>
-            <Link to="/" className="py-2 font-medium">Gift Cards</Link>
+            <Link to="/" className={`py-2 ${isActive('/') ? 'font-medium' : ''}`} onClick={() => setIsMenuOpen(false)}>Главная</Link>
+            <Link to="/catalog" className={`py-2 ${isActive('/catalog') ? 'font-medium' : ''}`} onClick={() => setIsMenuOpen(false)}>Каталог</Link>
+            <Link to="/how-to-use" className={`py-2 ${isActive('/how-to-use') ? 'font-medium' : ''}`} onClick={() => setIsMenuOpen(false)}>Как использовать</Link>
+            <Link to="/faq" className={`py-2 ${isActive('/faq') ? 'font-medium' : ''}`} onClick={() => setIsMenuOpen(false)}>FAQ</Link>
+            <Link to="/contact" className={`py-2 ${isActive('/contact') ? 'font-medium' : ''}`} onClick={() => setIsMenuOpen(false)}>Контакты</Link>
           </nav>
         </div>
       )}
